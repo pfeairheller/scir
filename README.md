@@ -1,1 +1,3 @@
-ELKSLVpbV9eH3xk2xBqH3fSgOmWTbUoBuE2JsLl0lu2L
+# Signify Client for Rust (SCIR) 
+
+Rust binary (scir) using Signifide to implement a Signify Client.

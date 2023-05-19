@@ -8,6 +8,8 @@ use clap::{Parser, Subcommand, Args};
 use keride::cesr::{Serder, Saider, Sadder};
 use keride::dat;
 
+mod commands;
+
 
 #[derive(Parser)]
 #[command(author, version, about, long_about = None)]
@@ -37,17 +39,7 @@ fn main() {
     // matches just as you would the top level cmd
     match &cli.command {
         Commands::Saidify(args) => {
-            let path = args.file.as_ref().unwrap();
-            let fs = File::open(path).unwrap();
-                // .with_context(|| format!("could not read file `{:#?}`", &path.into_os_string()))?;
-            let mut reader = BufReader::new(fs);
-            let val: serde_json::Value  = serde_json::from_reader(reader).unwrap();
-
-            let e1 = dat!(&val);
-            let (_, mut e2) = Saider::saidify(&e1, None, None, None, None).unwrap();
-            let serder = Serder::new(None, None, None, Some(&e2), None).unwrap();
-
-            println!("{}", serder.pretty(Some(1000)).unwrap())
+            commands::saidify::saidify(args.file.as_ref().unwrap());
         }
     }
 }
