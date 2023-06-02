@@ -9,6 +9,8 @@ use keride::cesr::{Serder, Saider, Sadder};
 use keride::dat;
 
 mod commands;
+mod core;
+mod app;
 
 
 #[derive(Parser)]
@@ -23,12 +25,19 @@ struct Cli {
 enum Commands {
     /// Generate and embed Self Addressing IDentifer (SAID) in map content
     Saidify(SaidifyArgs),
+    Connect(ConnectArgs),
 }
 
 #[derive(Args)]
 struct SaidifyArgs {
     #[arg(short, long)]
     file: Option<PathBuf>,
+}
+
+#[derive(Args)]
+struct ConnectArgs {
+    #[arg(short, long)]
+    url: Option<String>,
 }
 
 
@@ -40,6 +49,9 @@ fn main() {
     match &cli.command {
         Commands::Saidify(args) => {
             commands::saidify::saidify(args.file.as_ref().unwrap());
+        }
+        Commands::Connect(args) => {
+            commands::connect::connect(args.url.as_ref().unwrap());
         }
     }
 }
